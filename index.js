@@ -23,6 +23,9 @@ mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB" });
 const corsOptions = require("./config/corOptions.js");
 const credentials = require("./middleware/credentials.js");
 
+app.use(credentials);
+app.use(cors(corsOptions));
+
 const { check } = require("express-validator");
 
 let movies = require("./controllers/movies.js");
@@ -33,7 +36,7 @@ const PORT = process.env.PORT || 8080; /* eslint no-undef: off */
 // Create an instance of express
 var app = express();
 
-app.use(credentials);
+
 
 // Create a write stream (in append mode)
 const accesLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), { flags: "a" });
@@ -42,7 +45,7 @@ const accesLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), { f
 app.use(morgan("combined", { stream: accesLogStream }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
-app.use(cors(corsOptions));
+
 
 require("./controllers/auth/auth")(app); /* eslint no-unused-vars: off */
 let passport = require("passport");
