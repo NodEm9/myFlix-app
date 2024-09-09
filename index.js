@@ -18,7 +18,7 @@ const express = require("express"),
 require("dotenv").config();
 
 const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB", useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB"});
 
 const corsOptions = require("./config/corOptions.js");
 const credentials = require("./middleware/credentials.js");
