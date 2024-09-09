@@ -28,7 +28,7 @@ const { check } = require("express-validator");
 let movies = require("./controllers/movies.js");
 let users = require("./controllers/users.js");
 
-const port = process.env.PORT || 8080; /* eslint no-undef: off */
+const PORT = process.env.PORT || 8080; /* eslint no-undef: off */
 
 // Create an instance of express
 var app = express();
@@ -99,10 +99,10 @@ function errorHandler(err, req, res, next) {
 // Error handling middleware
 app.use(errorHandler);
 
+app.listen(PORT, () => console.log(`Server started on ${PORT}`)); 
 // Listen for requests
 mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB');
-  app.listen(port, () => console.log(`Server started on ${port}`)); 
 });
 
 module.exports = app;
