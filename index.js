@@ -21,13 +21,13 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB"});
 
 const corsOptions = require("./config/corOptions.js");
-const credentials = require("./middleware/credentials.js");
+// const credentials = require("./middleware/credentials.js");
 
 
 // Create an instance of express
 var app = express();
 
-app.use(credentials);
+// app.use(credentials);
 app.use(cors(corsOptions));
 
 const { check } = require("express-validator");
