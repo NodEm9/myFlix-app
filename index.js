@@ -1,3 +1,15 @@
+/**
+ * @file index.js
+ * @description This file is the entry point for the application. It sets up the server and connects to the database.
+ * It also sets up the routes for the application.
+ * @requires express
+ * @requires morgan
+ * @requires fs
+ * @requires path
+ * @requires cors
+ * @requires mongoose
+ * 
+ */
 const express = require("express"),
   morgan = require("morgan"),
   fs = require("fs"),
@@ -6,9 +18,8 @@ const express = require("express"),
 
 
 const mongoose = require("mongoose");
-
 mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB" });
-const allowedOrigins = require("./config/allowedOrign.js");
+const corsOptions = require("./config/corsOptions.js");
 
 const { check } = require("express-validator");
 
@@ -27,7 +38,7 @@ const accesLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), { f
 app.use(morgan("combined", { stream: accesLogStream }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
-app.use(cors());
+app.use(cors(corsOptions()));
 
 require("./controllers/auth/auth")(app); /* eslint no-unused-vars: off */
 let passport = require("passport");
