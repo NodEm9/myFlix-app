@@ -19,7 +19,7 @@ const express = require("express"),
 
 const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB" });
-const corsOptions = require("./config/corsOptions.js");
+const corsOptions = require("./config/corOptions.js");
 
 const { check } = require("express-validator");
 
