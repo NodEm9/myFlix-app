@@ -21,13 +21,13 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB"});
 
 const corsOptions = require("./config/corOptions.js");
-// const credentials = require("./middleware/credentials.js");
+const credentials = require("./middleware/credentials.js");
 
 
 // Create an instance of express
 var app = express();
 
-// app.use(credentials);
+app.use(credentials);
 app.use(cors(corsOptions));
 
 const { check } = require("express-validator");
@@ -89,13 +89,13 @@ app.get("/documentation", (req, res) => {
   res.sendFile("public")
 });
 
+
 // Error handling
 function errorHandler(err, req, res, next) {
   if (res.headersSent) {
     return next(err)
   }
   res.status(500).send("Something is broken!")
-  res.render('error', { error: err })
 }
 
 // Error handling middleware
