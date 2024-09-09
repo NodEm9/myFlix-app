@@ -48,7 +48,7 @@ require("./controllers/auth/auth")(app); /* eslint no-unused-vars: off */
 let passport = require("passport");
 require("./controllers/auth/passport");
 
-app.use('/', express.static(path.join(__dirname, '/public')));
+app.use(express.static('public')); // Serve documentation
 
 // Movies routes
 app.get("/movies", passport.authenticate("jwt", { session: false }), movies.getMovies);
