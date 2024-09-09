@@ -18,10 +18,14 @@ const express = require("express"),
 require("dotenv").config();
 
 const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB" });
+mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB", useNewUrlParser: true, useUnifiedTopology: true });
 
 const corsOptions = require("./config/corOptions.js");
 const credentials = require("./middleware/credentials.js");
+
+
+// Create an instance of express
+var app = express();
 
 app.use(credentials);
 app.use(cors(corsOptions));
@@ -32,11 +36,6 @@ let movies = require("./controllers/movies.js");
 let users = require("./controllers/users.js");
 
 const PORT = process.env.PORT || 8080; /* eslint no-undef: off */
-
-// Create an instance of express
-var app = express();
-
-
 
 // Create a write stream (in append mode)
 const accesLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), { flags: "a" });
