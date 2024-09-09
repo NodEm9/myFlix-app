@@ -15,11 +15,13 @@ const express = require("express"),
   fs = require("fs"),
   path = require("path"),
   cors = require("cors");
-
+require("dotenv").config();
 
 const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB" });
+
 const corsOptions = require("./config/corOptions.js");
+const credentials = require("./middleware/credentials.js");
 
 const { check } = require("express-validator");
 
@@ -31,6 +33,8 @@ const port = process.env.PORT || 8080; /* eslint no-undef: off */
 // Create an instance of express
 var app = express();
 
+app.use(credentials);
+
 // Create a write stream (in append mode)
 const accesLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), { flags: "a" });
 
@@ -38,13 +42,13 @@ const accesLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), { f
 app.use(morgan("combined", { stream: accesLogStream }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
-app.use(cors(corsOptions()));
+app.use(cors(corsOptions));
 
 require("./controllers/auth/auth")(app); /* eslint no-unused-vars: off */
 let passport = require("passport");
 require("./controllers/auth/passport");
 
-app.use(express.static("public"));
+app.use('/', express.static(path.join(__dirname, '/public')));
 
 // Movies routes
 app.get("/movies", passport.authenticate("jwt", { session: false }), movies.getMovies);
@@ -96,8 +100,9 @@ function errorHandler(err, req, res, next) {
 app.use(errorHandler);
 
 // Listen for requests
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB');
+  app.listen(port, () => console.log(`Server started on ${port}`)); 
 });
 
 module.exports = app;
