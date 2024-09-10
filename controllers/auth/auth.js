@@ -1,3 +1,20 @@
+/**
+ * Auth Controller
+ * @module controllers/auth/auth
+ * @api {post} /login Login
+ * @name Login
+ * @version 1.0.0
+ * @description Login to the application
+ * @param {String} Username Username
+ * @param {String} Password Password
+ * @function passport - Passport object
+ * @exports router - Express router
+ * @function generateJWTToken - Generate JWT Token
+ * @requires jwt
+ * @requires passport
+ * @requires dotenv
+ * @returns {JSON} - JSON object with user and token
+ */
 const jwt = require("jsonwebtoken"),
   passport = require("passport");
   

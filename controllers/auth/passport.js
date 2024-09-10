@@ -1,3 +1,12 @@
+/**
+ * @api {get} /auth/passport.js passport.js
+ * @name passport.js
+ * @version 0.1.0
+ * @description passport.js is a configuration file for passport authentication. 
+ * It uses the passport-local and passport-jwt strategies to authenticate users.
+ * @param {String} Username - Username
+ * @param {String} Password - Password
+ */
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   Models = require('../../model/models.js'),
