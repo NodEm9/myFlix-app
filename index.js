@@ -62,6 +62,7 @@ const express = require("express"),
 // Create an instance of express
 var app = express();
 app.use(compression());
+
 require("dotenv").config();
 
 const mongoose = require("mongoose");
