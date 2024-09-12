@@ -55,7 +55,13 @@ const express = require("express"),
   morgan = require("morgan"),
   fs = require("fs"),
   path = require("path"),
+  compression = require("compression"),
   cors = require("cors");
+
+  
+// Create an instance of express
+var app = express();
+app.use(compression());
 require("dotenv").config();
 
 const mongoose = require("mongoose");
@@ -64,9 +70,6 @@ mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB"});
 const corsOptions = require("./config/corOptions.js");
 const credentials = require("./middleware/credentials.js");
 
-
-// Create an instance of express
-var app = express();
 
 app.use(credentials);
 app.use(cors(corsOptions));
