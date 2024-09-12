@@ -4,6 +4,7 @@
  * @param {object} req - The request object.
  * @param {object} res - The response object.
  * @param {function} next - The next function. 
+ * @function credentials - Sets the Access-Control-Allow-Credentials header to true.
  */
 const allowedOrigins = require('../config/allowedOrign.js');
 
