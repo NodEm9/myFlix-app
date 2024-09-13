@@ -22,7 +22,13 @@ require("./passport.js");
 
 require("dotenv").config();
 
-
+/**
+ * 
+ * @param {*} user 
+ * @returns 
+ * @function generateJWTToken - Generate JWT Token
+ * @param {object} user - The user object
+ */
 let generateJWTToken = (user) => {
   return jwt.sign(user, process.env.JWT_SECRET_KEY, {
     subject: user.Username,

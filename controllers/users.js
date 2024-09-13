@@ -52,6 +52,7 @@ mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB" }); /* eslint no-und
 let Models = require("../model/models.js");
 let Users = Models.User;
 
+
 const { validationResult } = require("express-validator");
 
 // Adds data for a new user to our list of users.
@@ -199,31 +200,6 @@ async function deleteUser(req, res) {
   });
 }
 
-// Reset user password
-async function resetPassword(req, res) {
-  // Validate user input
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-  // Check if the user is the same as the one being updated
-  if (req.user.Username !== req.params.Username) {
-    return res.status(403).send("Permission denied.")
-  }
-    // Hash the password
-    let hashedPassword = Users.hashPassword(req.body.Password);
-  // Update user data
-  await Users.findOneAndUpdate({ Username: req.params.Username }, {
-    $set: {
-      Password: hashedPassword
-    }
-  }, { new: true } /** This line makes sure that the updated document is returned **/)
-    .then((updateUser) => {
-      res.status(200).json(updateUser)
-    }).catch(err => {
-      res.status(500).send("Error: " + err)
-    });
-}
 
 module.exports = {
   getUsers,
@@ -234,5 +210,4 @@ module.exports = {
   removeFavoriteMovie,
   updateUser,
   deleteUser,
-  resetPassword
 };

@@ -71,7 +71,15 @@ const userSchema = mongoose.Schema({
     default: Date.now()
   },
   updatedAt: Date,
-  favoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
+  favoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
+  isVerified: {
+    type: Boolean,
+    default: false
+},
+  resetPasswordToken: String,
+  resetPasswordTokenExpiry: Date,
+  verifyToken: String,
+  verifyTokenExpiry: Date
 });
 
 userSchema.statics.hashPassword = (password) => {

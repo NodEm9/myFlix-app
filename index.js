@@ -72,8 +72,8 @@ const corsOptions = require("./config/corOptions.js");
 const credentials = require("./middleware/credentials.js");
 
 
-// app.use(credentials);
-app.use(cors());
+app.use(credentials);
+app.use(cors(corsOptions));
 
 const { check } = require("express-validator");
 
@@ -123,11 +123,6 @@ app.put("/users/:Username", [
 ], passport.authenticate("jwt", { session: false }),
   users.updateUser);
 
-app.put("/users/:Username/resetpassword", [
-  check("Username", "Username is required").isLength({ min: 5 }),
-  check("Username", "Username contains non alphanumeric characters - not allowed").isAlphanumeric(),
-  check("Password", "Password is required").not().isEmpty(),
-], passport.authenticate("jwt", { session: false }), users.resetPassword);
 
 app.post("/users/:Username/movies/:MovieID", passport.authenticate("jwt", { session: false }), users.addFavoriteMovie);
 app.get("/users/:Username/movies/favorites", passport.authenticate("jwt", { session: false }), users.getFavoriteMovies);
