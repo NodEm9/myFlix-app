@@ -6,8 +6,8 @@ This API will provide its users with new and older movies on the movie chats. Th
 
 Below, I've included how you can install and use this API including examples of request and response types.
 
-- See documentation: [Documentation](https://movie-api-h54p.onrender.com/documentation.html)
-- Checkout the API live [follow link](https://movie-api-h54p.onrender.com/documentation.html)
+- See documentation: [Documentation](https://myflix-app-led6.onrender.com/documentation.html)
+- JSDOC: The API JSDOC documentation can be found in the /out directory of the project repository. 
 
 - Copy to clone this repository: <https://github.com/NodEm9/movie_api.git>
 
@@ -139,3 +139,5 @@ There is basically one HTTP request type for movies.
     }]
     </pre>
 </blockquote>
+
+
