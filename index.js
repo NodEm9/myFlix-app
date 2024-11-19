@@ -1,54 +1,9 @@
 /**
- * @file index.js
  * @name index.js
- * @path /index.js
  * @description This file is the entry point for the application. It sets up the server and connects to the database.
  * It also sets up the routes for the application and validates users inputs.
- * @requires express
- * @requires morgan
- * @requires fs
- * @requires path
- * @requires cors
- * @requires mongoose
- * @requires dotenv
- * @requires corsOptions 
- * @requires credentials
- * @requires movies
- * @requires users
- * @requires express-validator
- * @requires passport
- * @requires auth
- * @function errorHandler
- * @exports app 
- * @function app.listen - Listen for requests
- * @constant {object} express - The express module
- * @constant {object} morgan - The morgan module
- * @constant {object} fs - The fs module
- * @constant {object} path - The path module
- * @constant {object} cors - The cors module
- * @constant {object} mongoose - The mongoose object
- * @constant {object} dotenv - The dotenv object
- * @constant {object} corsOptions - The corsOptions object
- * @see {@link module:config/corOptions} for allowed origins for the CORS policy
- * @constant {object} credentials - The credentials object
- * @see {@link module:middleware/credentials} for the middleware function that sets the Access-Control-Allow-Credentials header to true
- * @constant {object} movies - The movies object
- * @see {@link module:controllers/movies} for the movies controller
- * @constant {object} users - The users object
- * @see {@link module:controllers/users} for the users controller
- * @constant {object} passport - The passport object
- * @constant {object} check - The check object
- * @see {@link https://express-validator.github.io/docs/} for express-validator documentation
- * @constant {object} auth - The auth object
  * @see {@link module:controllers/auth/auth} for the auth controller
  * @constant {function} errorHandler - The errorHandler function
- * @constant {number} PORT - The port number
- * @constant {function} app.use - Express middleware
- * @constant {function} app.get - Express middleware
- * @constant {function} app.post - Express middleware
- * @constant {function} app.put - Express middleware
- * @constant {function} app.delete - Express middleware
- * @constant {function} app.listen - Listen for requests
  * @constant {object} app - The express application
  */
 const express = require("express"),

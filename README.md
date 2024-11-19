@@ -139,5 +139,3 @@ There is basically one HTTP request type for movies.
     }]
     </pre>
 </blockquote>
-
-

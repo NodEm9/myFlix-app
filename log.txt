@@ -311,3 +311,8 @@
 ::ffff:127.0.0.1 - - [15/Sep/2024:13:35:41 +0000] "POST /login?Username=Emma4&Password=12345 HTTP/1.1" 200 - "-" "Thunder Client (https://www.thunderclient.com)"
 ::ffff:127.0.0.1 - - [15/Sep/2024:13:36:39 +0000] "PUT /movies HTTP/1.1" 404 145 "-" "Thunder Client (https://www.thunderclient.com)"
 ::ffff:127.0.0.1 - - [15/Sep/2024:13:36:45 +0000] "GET /movies HTTP/1.1" 200 - "-" "Thunder Client (https://www.thunderclient.com)"
+::1 - - [29/Oct/2024:06:50:51 +0000] "POST /login?Username=Emma4&Password=12345 HTTP/1.1" 200 968 "-" "PostmanRuntime/7.42.0"
+::1 - - [29/Oct/2024:06:56:30 +0000] "POST /users HTTP/1.1" 422 94 "-" "PostmanRuntime/7.42.0"
+::1 - - [29/Oct/2024:06:56:37 +0000] "GET /users HTTP/1.1" 401 - "-" "PostmanRuntime/7.42.0"
+::1 - - [29/Oct/2024:06:56:59 +0000] "GET /users HTTP/1.1" 200 - "-" "PostmanRuntime/7.42.0"
+::1 - - [29/Oct/2024:06:57:26 +0000] "GET /users/Emma4 HTTP/1.1" 200 - "-" "PostmanRuntime/7.42.0"
