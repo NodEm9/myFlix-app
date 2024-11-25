@@ -1,31 +1,6 @@
 /**
  * @name User Module - Express controller for user endpoints.
  * @module controllers/users 
- * @requires express
- * @requires mongoose
- * @requires dotenv
- * @requires models/models
- * @requires express-validator
- * @exports getUsers
- * @see {@link module:controllers/users.getUsers} for the getUsers function
- * @exports addUser
- * @see {@link module:controllers/users.addUser} for the addUser function
- * @exports getUserByUsername
- * @see {@link module:controllers/users.getUserByUsername} for the getUserByUsername function
- * @exports addFavoriteMovie
- * @see {@link module:controllers/users.addFavoriteMovie} for the addFavoriteMovie function
- * @exports getFavoriteMovies
- * @see {@link module:controllers/users.getFavoriteMovies} for the getFavoriteMovies function
- * @exports removeFavoriteMovie
- * @see {@link module:controllers/users.removeFavoriteMovie} for the removeFavoriteMovie function
- * @exports updateUser
- * @see {@link module:controllers/users.updateUser} for the updateUser function
- * @exports deleteUser
- * @see {@link module:controllers/users.deleteUser} for the deleteUser function
- * @exports resetPassword
- * @see {@link module:controllers/users.resetPassword} for the resetPassword function
- * @params {object} req - The request object
- * @params {object} res - The response object
  * @returns {object} res - The response object
  * @function getUsers - Get all users in the database 
  * @function addUser - Adds data for a new user to our list of users.
@@ -36,10 +11,6 @@
  * @function updateUser - Update user data
  * @function deleteUser - Delete user data by username
  * @function resetPassword - Reset user password
- * @constant {object} mongoose - The mongoose object
- * @constant {object} Models - The models object
- * @constant {function} validationResult - The validationResult function
- * @constant {object} Users - The Users model
  */
 
 require("dotenv").config();
@@ -55,7 +26,11 @@ let Users = Models.User;
 
 const { validationResult } = require("express-validator");
 
-// Adds data for a new user to our list of users.
+/**
+ * This method adds data for a new user to our list of users.
+ * @method addUser 
+ * @param {object} req - Request object
+ */
 async function addUser(req, res) {
   // Validate user input
   const errors = validationResult(req);
@@ -87,7 +62,11 @@ async function addUser(req, res) {
     });
 };
 
-// Get all users in the database
+/**
+ * This method returns the list of all users in the database  
+ * @method getUsers
+ * @param {object} req - Request object
+ */
 async function getUsers(req, res) {
   await Users.find()
     .then(users => {
@@ -99,7 +78,11 @@ async function getUsers(req, res) {
 
 
 
-// Get a user by username
+/**
+ * This method returns data about a single user by username
+ * @method getUserByUsername
+ * @param {object} req - Request object
+ */
 async function getUserByUsername(req, res) {
   await Users.findOne({ Username: req.params.Username })
     .select("Username Email Birthday favoriteMovies createdAt updatedAt Role")
@@ -116,7 +99,11 @@ async function getUserByUsername(req, res) {
     });
 };
 
-// Add favorite movies to user favorite movies array list
+/**
+ * This method adds favorite movies to user favorite movies array list
+ * @method addFavoriteMovie
+ * @param {object} req - Request object
+ */
 async function addFavoriteMovie(req, res) {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $push: { favoriteMovies: req.params.MovieID },
@@ -129,6 +116,11 @@ async function addFavoriteMovie(req, res) {
     });
 };
 
+/**
+ * This method returns favorite movies from user favorite movies array list
+ * @method getFavoriteMovies
+ * @param {object} req - Request object
+ */
 async function getFavoriteMovies(req, res) {
   await Users.findOne({ Username: req.params.Username })
     .select("favoriteMovies")
@@ -145,7 +137,12 @@ async function getFavoriteMovies(req, res) {
     });
 };
 
-// Remove favorite movies from user favorite movies array list
+
+/**
+ * This method removes favorite movies from user favorite movies array list
+ * @method removeFavoriteMovie
+ * @param {object} req - Request object
+ */
 async function removeFavoriteMovie(req, res) {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $pull: { favoriteMovies: req.params.MovieID }
@@ -157,7 +154,11 @@ async function removeFavoriteMovie(req, res) {
     });
 };
 
-// Update user data
+/**
+ * This method updates user data by username and returns the updated user data
+ * @method updateUser
+ * @param {object} req - Request object
+ */
 async function updateUser(req, res) {
   // Validate user input
   const errors = validationResult(req);
@@ -187,7 +188,11 @@ async function updateUser(req, res) {
     });
 };
 
-// Delete user data by username
+/**
+ * This method deletes user data by username and returns a message
+ * @method deleteUser
+ * @param {object} req - Request object
+ */
 async function deleteUser(req, res) {
   await Users.findOneAndDelete({ Username: req.params.Username }).then((user) => {
     if (!user) {

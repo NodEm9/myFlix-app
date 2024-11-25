@@ -2,29 +2,11 @@
 /**
  * @name Movies Module - Express controller for movie endpoints.
  * @module controllers/movies 
- * @requires express
- * @requires mongoose
- * @requires dotenv
- * @requires models/models
  * @exports getMovies
- * @see {@link module:controllers/movies.getMovies} for the getMovies function
- * @exports getMovieByTitle
- * @see {@link module:controllers/movies.getMovieByTitle} for the getMovieByTitle function
- * @exports getGenreByName
- * @see {@link module:controllers/movies.getGenreByName} for the getGenreByName function
- * @exports getDirectorByName
- * @see {@link module:controllers/movies.getDirectorByName} for the getDirectorByName function
- * @param {object} req - The request object
- * @param {object} res - The response object
- * @returns {object} res - The response object
  * @function getMovies - Get the list of all movies
  * @function getMovieByTitle - Get data about a single movie by title
  * @function getGenreByName - Get data about a genre by name
  * @function getDirectorByName - Get data about a director by name
- * @constant {object} mongoose - The mongoose object
- * @constant {function} validationResult - The validationResult function 
- * @constant {object} Models - The models object
- * @constant {object} Movies - The Movies model
  */
 
 require("dotenv").config();
@@ -38,7 +20,12 @@ let Models = require("../model/models.js");
 
 let Movies = Models.Movie;
 
-// Get the list of all movies
+/**
+ * This medthod returns the list of all movies in the database
+ * @method getMovies
+ * @param {object} req - Request object
+ * 
+ */
 async function getMovies(req, res) {
   await Movies.find()
     .then(movies => res.status(200).json(movies))
@@ -49,7 +36,11 @@ async function getMovies(req, res) {
     });
 };
 
-// Get data about a single movie by title
+/***
+ * This method returns data about a single movie by title 
+ * @method getMovieByTitle
+ * @param {object} req - Request object
+ */
 async function getMovieByTitle(req, res) {
   await Movies.findOne({ Title: req.params.title })
     .then(movie => {
@@ -64,7 +55,11 @@ async function getMovieByTitle(req, res) {
     });
 };
 
-// Get data about a genre by name
+/**
+ * This method returns data about a genre by name 
+ * @method getGenreByName
+ * @param {object} req - Request object
+ */
 async function getGenreByName(req, res) {
   await Movies.findOne({ "Genre.name": req.params.genreName })
     .then((genre) => {
@@ -79,7 +74,11 @@ async function getGenreByName(req, res) {
     });
 };
 
-// Get data about a director by name
+/**
+ * This method returns data about a director by name 
+ * @method getDirectorByName
+ * @param {object} req - Request object
+ */
 async function getDirectorByName(req, res) {
   await Movies.findOne({ "Director.name": req.params.directorName })
     .then((director) => {

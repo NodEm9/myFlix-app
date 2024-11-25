@@ -52,7 +52,12 @@ require("./controllers/auth/passport");
 
 app.use(express.static('public')); // Serve documentation
 
-// Movies routes
+/**
+ * @name GET /movies - Get the list of all movies
+ * @function getMovies - Get the list of all movies
+ *  The movies routes are protected by JWT authentication and authorization.
+ * user must be logged in to access the movies routes.
+ */
 app.get("/movies", passport.authenticate("jwt", { session: false }), movies.getMovies);
 app.get("/movies/:title", passport.authenticate("jwt", { session: false }), movies.getMovieByTitle);
 app.get("/movies/genre/:genreName", passport.authenticate("jwt", { session: false }), movies.getGenreByName);
@@ -61,6 +66,11 @@ app.get("/movies/director/:directorName", passport.authenticate("jwt", { session
 // Users routes
 app.get("/users", passport.authenticate("jwt", { session: false }), users.getUsers);
 
+/**
+ * @name POST /users - Add a new user
+ * @function addUser - Adds data for a new user to our list of users.
+ *  This part of the code validates the user input before adding the user to the database.
+ */
 app.post("/users", [
   check("Username", "Username is required").isLength({ min: 5 }),
   check("Username", "Username contains non alphanumeric characters - not allowed").isAlphanumeric(),
@@ -78,7 +88,13 @@ app.put("/users/:Username", [
 ], passport.authenticate("jwt", { session: false }),
   users.updateUser);
 
-
+/**
+ * @name POST /users/:Username/movies/:MovieID - Add a favorite movie
+ * @function addFavoriteMovie - Add favorite movies to user favorite movies array list
+ * @name GET /users/:Username/movies/favorites - Get favorite movies
+ *  The users routes are protected by JWT authentication and authorization. 
+ * The user must be logged in to access the users routes.
+ */
 app.post("/users/:Username/movies/:MovieID", passport.authenticate("jwt", { session: false }), users.addFavoriteMovie);
 app.get("/users/:Username/movies/favorites", passport.authenticate("jwt", { session: false }), users.getFavoriteMovies);
 app.delete("/users/:Username", passport.authenticate("jwt", { session: false }), users.deleteUser);
