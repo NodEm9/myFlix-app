@@ -56,7 +56,7 @@ app.use(express.static('public')); // Serve documentation
  * @name GET /movies - Get the list of all movies
  * @function getMovies - Get the list of all movies
  *  The movies routes are protected by JWT authentication and authorization.
- * user must be logged in to access the movies routes.
+ * user must be logged in to access the movies routes. 
  */
 app.get("/movies", passport.authenticate("jwt", { session: false }), movies.getMovies);
 app.get("/movies/:title", passport.authenticate("jwt", { session: false }), movies.getMovieByTitle);
@@ -79,7 +79,13 @@ app.post("/users", [
 ], users.addUser);
 
 app.get("/users/:Username", passport.authenticate("jwt", { session: false }), users.getUserByUsername);
-
+/**
+ * @name PUT /users/:Username - Update user data
+ * @function updateUser - Update user data 
+ * This part of the code validates the user input before updating the user data in the database.
+ * The route is also protected by JWT authentication and authorization. so that only the user can update their data. 
+ * The user must be logged in to be able to update their data, and the user must be the owner of the data to update it.
+ */
 app.put("/users/:Username", [
   check("Username", "Username is required").isLength({ min: 5 }),
   check("Username", "Username contains non alphanumeric characters - not allowed").isAlphanumeric(),
@@ -92,8 +98,9 @@ app.put("/users/:Username", [
  * @name POST /users/:Username/movies/:MovieID - Add a favorite movie
  * @function addFavoriteMovie - Add favorite movies to user favorite movies array list
  * @name GET /users/:Username/movies/favorites - Get favorite movies
- *  The users routes are protected by JWT authentication and authorization. 
- * The user must be logged in to access the users routes.
+ *  This routes add a favorite movie to the user's favorite movies list and get the user's favorite movies list.
+ * The routes are protected by JWT authentication and authorization. This way only the user can add 
+ * and delete thier favorite movies list.
  */
 app.post("/users/:Username/movies/:MovieID", passport.authenticate("jwt", { session: false }), users.addFavoriteMovie);
 app.get("/users/:Username/movies/favorites", passport.authenticate("jwt", { session: false }), users.getFavoriteMovies);
