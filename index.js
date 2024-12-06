@@ -5,11 +5,14 @@ const express = require("express"),
   path = require("path"),
   compression = require("compression"),
   cors = require("cors");
+require("dotenv").config();
+  
+const port = process.env.PORT; 
 
 var app = express();
 app.use(compression());
 
-require("dotenv").config();
+
 const db = require("./config/db.js");
 db();
 
@@ -24,8 +27,6 @@ const { check } = require("express-validator");
 
 let movies = require("./controllers/movies.js");
 let users = require("./controllers/users.js");
-
-const PORT = process.env.PORT || 8080; 
 
 
 const accesLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), { flags: "a" });
@@ -80,7 +81,7 @@ app.get("/documentation", (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Server started on ${PORT}`)); 
+app.listen(port, () => console.log(`Server started on http://localhost:${port}`)); 
 
 
 module.exports = app;
