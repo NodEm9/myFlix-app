@@ -45,6 +45,7 @@ async function getGenreByName(req, res) {
     });
 };
 
+
 async function getDirectorByName(req, res) {
   await Movies.findOne({ "Director.name": req.params.directorName })
     .then((director) => {

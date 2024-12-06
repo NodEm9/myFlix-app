@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const db = () => {
   mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB" }); /* eslint no-undef: off */
   let db = mongoose.connection;

@@ -5,14 +5,13 @@ const express = require("express"),
   path = require("path"),
   compression = require("compression"),
   cors = require("cors");
-require("dotenv").config();
-  
+
 const port = process.env.PORT; 
 
 var app = express();
 app.use(compression());
 
-
+require("dotenv").config();
 const db = require("./config/db.js");
 db();
 
@@ -35,7 +34,6 @@ app.use(morgan("combined", { stream: accesLogStream }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 
-
 require("./controllers/auth/auth")(app); 
 let passport = require("passport");
 require("./controllers/auth/passport");
@@ -47,9 +45,7 @@ app.get("/movies/:title", passport.authenticate("jwt", { session: false }), movi
 app.get("/movies/genre/:genreName", passport.authenticate("jwt", { session: false }), movies.getGenreByName);
 app.get("/movies/director/:directorName", passport.authenticate("jwt", { session: false }), movies.getDirectorByName);
 
-
 app.get("/users", passport.authenticate("jwt", { session: false }), users.getUsers);
-
 
 app.post("/users", [
   check("Username", "Username is required").isLength({ min: 5 }),
