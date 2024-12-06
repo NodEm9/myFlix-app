@@ -1,10 +1,3 @@
-/**
- * @name Allowed Origins Module - Array of allowed origins for CORS
- * @module allowedOrigins 
- * @description This module exports an array of allowed origins for CORS
- * 
- */
-
 const allowedOrigins = [
   "http://127.0.0.1:5500",
   "http://localhost:1234",

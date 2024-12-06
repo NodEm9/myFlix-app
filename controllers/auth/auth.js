@@ -1,10 +1,3 @@
-/**
- * Auth Controller
- * @module controllers/auth/auth
- * @description Login to the application
- * @function passport - Passport object
- * @function generateJWTToken - Generate JWT Token
- */
 const jwt = require("jsonwebtoken"),
   passport = require("passport");
   
@@ -12,13 +5,6 @@ require("./passport.js");
 
 require("dotenv").config();
 
-/**
- * 
- * @param {*} user 
- * @returns 
- * @function generateJWTToken - Generate JWT Token
- * @param {object} user - The user object
- */
 let generateJWTToken = (user) => {
   return jwt.sign(user, process.env.JWT_SECRET_KEY, {
     subject: user.Username,
@@ -27,11 +13,6 @@ let generateJWTToken = (user) => {
   }) /* eslint no-undef: off */ 
 };
 
-/**
- * Login to the application 
- * @function login
- * @param {object} req - Request object
- */
 module.exports = (router) => {
   router.post("/login", (req, res) => {
     passport.authenticate("local", { session: false }, (error, user) => {

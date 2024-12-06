@@ -1,21 +1,7 @@
-/**
- * @module models
- * @requires mongoose
- * @requires bcrypt
- * @exports Movie - The Movie model
- * @exports User - The User model
- * @constant {object} mongoose - The mongoose object
- * @constant {object} bcrypt - The bcrypt object
- * @constant {function} bcrypt.hashSync - The bcrypt.hashSync function
- * @constant {function} bcrypt.compareSync - The bcrypt.compareSync function
- * @constant {function} mongoose.Schema - The mongoose.Schema function
- * @constant {object} movieSchema - The movieSchema object
- * @constant {object} userSchema - The userSchema object
- */
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// Create a schema for the movies
+
 const movieSchema = mongoose.Schema({
   Title: {
     type: String,
@@ -43,7 +29,7 @@ const movieSchema = mongoose.Schema({
   Featured: Boolean
 });
 
-// Create a schema for the users
+
 const userSchema = mongoose.Schema({
   Username: {
     type: String, 
@@ -90,7 +76,6 @@ userSchema.methods.validatePassword = function (password) {
   return bcrypt.compareSync(password, this.Password);
  };
 
-// Create models for the movies and users
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model("users", userSchema);
 

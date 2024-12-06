@@ -1,45 +1,20 @@
-/**
- * @name User Module - Express controller for user endpoints.
- * @module controllers/users 
- * @returns {object} res - The response object
- * @function getUsers - Get all users in the database 
- * @function addUser - Adds data for a new user to our list of users.
- * @function getUserByUsername - Get a user by username
- * @function addFavoriteMovie - Add favorite movies to user favorite movies array list
- * @function getFavoriteMovies - Get favorite movies from user favorite movies array list
- * @function removeFavoriteMovie - Remove favorite movies from user favorite movies array list
- * @function updateUser - Update user data
- * @function deleteUser - Delete user data by username
- * @function resetPassword - Reset user password
- */
-
 require("dotenv").config();
-
-const mongoose = require("mongoose");
-
-mongoose.connect(process.env.MONGO_URI, { dbName: "movieDB" }); /* eslint no-undef: off */
-
+const db = require("../config/db.js")
+db();
 
 let Models = require("../model/models.js");
 let Users = Models.User;
 
-
 const { validationResult } = require("express-validator");
 
-/**
- * This method adds data for a new user to our list of users.
- * @method addUser 
- * @param {object} req - Request object
- */
 async function addUser(req, res) {
-  // Validate user input
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
-  // Hash the password
+
   let hashedPassword = Users.hashPassword(req.body.Password)
-  // Check if the user already exists
+
   await Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
@@ -62,11 +37,6 @@ async function addUser(req, res) {
     });
 };
 
-/**
- * This method returns the list of all users in the database  
- * @method getUsers
- * @param {object} req - Request object
- */
 async function getUsers(req, res) {
   await Users.find()
     .then(users => {
@@ -76,13 +46,6 @@ async function getUsers(req, res) {
     });
 };
 
-
-
-/**
- * This method returns data about a single user by username
- * @method getUserByUsername
- * @param {object} req - Request object
- */
 async function getUserByUsername(req, res) {
   await Users.findOne({ Username: req.params.Username })
     .select("Username Email Birthday favoriteMovies createdAt updatedAt Role")
@@ -99,11 +62,6 @@ async function getUserByUsername(req, res) {
     });
 };
 
-/**
- * This method adds favorite movies to user favorite movies array list
- * @method addFavoriteMovie
- * @param {object} req - Request object
- */
 async function addFavoriteMovie(req, res) {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $push: { favoriteMovies: req.params.MovieID },
@@ -116,11 +74,6 @@ async function addFavoriteMovie(req, res) {
     });
 };
 
-/**
- * This method returns favorite movies from user favorite movies array list
- * @method getFavoriteMovies
- * @param {object} req - Request object
- */
 async function getFavoriteMovies(req, res) {
   await Users.findOne({ Username: req.params.Username })
     .select("favoriteMovies")
@@ -137,12 +90,6 @@ async function getFavoriteMovies(req, res) {
     });
 };
 
-
-/**
- * This method removes favorite movies from user favorite movies array list
- * @method removeFavoriteMovie
- * @param {object} req - Request object
- */
 async function removeFavoriteMovie(req, res) {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $pull: { favoriteMovies: req.params.MovieID }
@@ -154,25 +101,19 @@ async function removeFavoriteMovie(req, res) {
     });
 };
 
-/**
- * This method updates user data by username and returns the updated user data
- * @method updateUser
- * @param {object} req - Request object
- */
+
 async function updateUser(req, res) {
-  // Validate user input
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
-  // Check if the user is the same as the one being updated
+
   if (req.user.Username !== req.params.Username) {
     return res.status(403).send("Permission denied.")
   }
-  // Hash the password
+
   let hashedPassword = Users.hashPassword(req.body.Password);
   
-  // Update user data
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $set: {
       Username: req.body.Username,
@@ -188,11 +129,6 @@ async function updateUser(req, res) {
     });
 };
 
-/**
- * This method deletes user data by username and returns a message
- * @method deleteUser
- * @param {object} req - Request object
- */
 async function deleteUser(req, res) {
   await Users.findOneAndDelete({ Username: req.params.Username }).then((user) => {
     if (!user) {
